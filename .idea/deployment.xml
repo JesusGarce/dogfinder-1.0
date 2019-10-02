@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="files.000webhost.com">
+    <serverData>
+      <paths name="files.000webhost.com">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/storage/ssd4/152/10356152" local="$PROJECT_DIR$" web="https://dogfinder-app.000webhostapp.com/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/bower_components" />
+            <excludedPath local="true" path="$PROJECT_DIR$/images_uploads" />
+            <excludedPath local="true" path="$PROJECT_DIR$/node_modules" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

@@ -8,7 +8,7 @@ import re
 import matplotlib.pyplot as plt
 from keras.applications.resnet50 import decode_predictions
 from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D
-from project.backend.connection_db import select_breed
+from project.backend.connection_db import select_breed, put_registry
 
 
 # extract pre-trained face detector
@@ -24,7 +24,7 @@ def face_detector(img_path):
     faces = face_cascade.detectMultiScale(gray)
     return len(faces) > 0
 
-dog_names = [item[20:-1] for item in sorted(glob("C:/Users/jesus/Desktop/DogFinder/dogImages/full_train/*/"))]
+dog_names = [item[20:-1] for item in sorted(glob("C:/Users/jesus/Desktop/DogFinder/dogImages/train/*/"))]
 
 from keras.applications.resnet50 import ResNet50
 
@@ -129,12 +129,16 @@ def dog_breed_classifier(img_path):
         second_breed = select_breed(breed[1][0][0])
         print(main_breed)
         print(second_breed)
+        put_registry(1, breed[0][1], breed[0][2], breed[1][1], breed[1][2], img_path)
         return [1, breed, main_breed, second_breed]
 
     # When the face detected is human
     elif is_human:
         main_breed = select_breed(breed[0][0][0])
         print(main_breed)
+
+        put_registry(2, breed[0][1], breed[0][2], breed[1][1], breed[1][2], img_path)
         return [2, breed, main_breed]
     else:
+        put_registry(0, "", 0, "", 0, img_path)
         return 0

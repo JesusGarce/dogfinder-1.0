@@ -14,16 +14,16 @@ from keras.callbacks import ModelCheckpoint
 def load_dataset(path):
     data = load_files(path)
     dog_files = np.array(data['filenames'])
-    dog_targets = np_utils.to_categorical(np.array(data['target']), 165)
+    dog_targets = np_utils.to_categorical(np.array(data['target']), 133)
     return dog_files, dog_targets
 
-train_files, train_targets = load_dataset('C:/Users/jesus/Desktop/dogImages/train')
-valid_files, valid_targets = load_dataset('C:/Users/jesus/Desktop/dogImages/valid')
-test_files, test_targets = load_dataset('C:/Users/jesus/Desktop/dogImages/test')
+train_files, train_targets = load_dataset('C:/Users/jesus/Desktop/DogFinder/dogImages/train')
+valid_files, valid_targets = load_dataset('C:/Users/jesus/Desktop/DogFinder/dogImages/valid')
+test_files, test_targets = load_dataset('C:/Users/jesus/Desktop/DogFinder/dogImages/test')
 #train_files, train_targets = load_dataset('C:/Users/jesus/Desktop/DogFinder_data/dog-breed-identification/train')
 
 # load list of dog names
-dog_names = [item[20:-1] for item in sorted(glob("C:/Users/jesus/Desktop/dogImages/train/*/"))]
+dog_names = [item[20:-1] for item in sorted(glob("C:/Users/jesus/Desktop/DogFinder/dogImages/train/*/"))]
 
 # print statistics about the dataset
 print('There are %d total dog categories.' % len(dog_names))
@@ -33,7 +33,7 @@ import random
 random.seed(8675309)
 
 # load filenames in shuffled human dataset
-human_files = np.array(glob("C:/Users/jesus/Desktop/DogFinder_data/human/lfw/*/*"))
+human_files = np.array(glob("C:/Users/jesus/Desktop/DogFinder/lfw/*/*"))
 random.shuffle(human_files)
 
 # print statistics about the dataset
@@ -45,9 +45,10 @@ import cv2
 import matplotlib.pyplot as plt
 
 # extract pre-trained face detector
-face_cascade = cv2.CascadeClassifier('C:/Users/jesus/Desktop/DogFinder_data/haarcascade_frontalface_alt.xml')
+face_cascade = cv2.CascadeClassifier('C:/Users/jesus/Desktop/DogFinder/haarcascade_frontalface_alt.xml')
 
 # load color (BGR) image
+print(human_files[5])
 
 img = cv2.imread(human_files[5])
 # convert BGR image to grayscale
@@ -193,7 +194,7 @@ model.add(Dropout(0.2))
 model.add(Flatten())
 model.add(Dense(500, activation='relu'))
 model.add(Dropout(0.2))
-model.add(Dense(165, activation='softmax'))
+model.add(Dense(133, activation='softmax'))
 
 model.summary()
 
@@ -207,7 +208,7 @@ epochs = 15
 
 ### Do NOT modify the code below this line.
 
-checkpointer = ModelCheckpoint(filepath='C:/Users/jesus/Desktop/dogImages/saved_models/weights.best.from_scratch.hdf5',
+checkpointer = ModelCheckpoint(filepath='C:/Users/jesus/Desktop/DogFInder/dogImages/saved_models/weights.best.from_scratch.hdf5',
                                verbose=1, save_best_only=True)
 
 model.fit(train_tensors, train_targets,
@@ -226,20 +227,20 @@ print('Test accuracy: %.4f%%' % test_accuracy)
 
 model = tf.keras.models.load_model('dogfinder_new_way.h5')
 
-bottleneck_features = np.load('C:/Users/jesus/Desktop/dogImages/bottleneck/DogVGG16Data.npz')
+bottleneck_features = np.load('C:/Users/jesus/Desktop/DogFinder/dogImages/bottleneck/DogVGG16Data.npz')
 train_VGG16 = bottleneck_features['train']
 valid_VGG16 = bottleneck_features['valid']
 test_VGG16 = bottleneck_features['test']
 
 VGG16_model = Sequential()
 VGG16_model.add(GlobalAveragePooling2D(input_shape=train_VGG16.shape[1:]))
-VGG16_model.add(Dense(165, activation='softmax'))
+VGG16_model.add(Dense(133, activation='softmax'))
 
 VGG16_model.summary()
 
 VGG16_model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
-checkpointer = ModelCheckpoint(filepath='C:/Users/jesus/Desktop/dogImages/saved_models/weights.best.VGG16.hdf5',
+checkpointer = ModelCheckpoint(filepath='C:/Users/jesus/Desktop/DogFinder/dogImages/saved_models/weights.best.VGG16.hdf5',
                                verbose=1, save_best_only=True)
 
 VGG16_model.fit(train_VGG16, train_targets,
@@ -263,7 +264,7 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 # Trying with different pre-trained
-bottleneck_features = np.load('C:/Users/jesus/Desktop/dogImages/bottleneck/DogResnet50Data.npz')
+bottleneck_features = np.load('C:/Users/jesus/Desktop/DogFinder/dogImages/bottleneck/DogResnet50Data.npz')
 train_ResNet50 = bottleneck_features['train']
 valid_ResNet50 = bottleneck_features['valid']
 test_ResNet50 = bottleneck_features['test']
@@ -275,7 +276,7 @@ test_ResNet50 = bottleneck_features['test']
 
 ResNet50_model = Sequential()
 ResNet50_model.add(GlobalAveragePooling2D(input_shape=train_ResNet50.shape[1:]))
-ResNet50_model.add(Dense(165, activation='softmax'))
+ResNet50_model.add(Dense(133, activation='softmax'))
 
 ResNet50_model.summary()
 
@@ -286,7 +287,7 @@ ResNet50_model.compile(loss='categorical_crossentropy', optimizer='rmsprop', met
 
 from keras.callbacks import ModelCheckpoint
 
-checkpointer = ModelCheckpoint(filepath='C:/Users/jesus/Desktop/dogImages/saved_models/weights.best.ResNet50.hdf5',
+checkpointer = ModelCheckpoint(filepath='C:/Users/jesus/Desktop/DogFinder/dogImages/saved_models/weights.best.ResNet50.hdf5',
                                verbose=1, save_best_only=True)
 
 ResNet50_model.fit(train_ResNet50, train_targets,
@@ -303,7 +304,7 @@ test_accuracy = 100*np.sum(np.array(ResNet50_predictions)==np.argmax(test_target
 print('Test accuracy: %.4f%%' % test_accuracy)
 
 model.save('dogfinder_new_way.h5')
-ResNet50_model.save('dogfinder_resnet50.h5')
+ResNet50_model.save('dogfinder_resnet50_133.h5')
 
 from extract_bottleneck_features import *
 
@@ -315,7 +316,7 @@ def ResNet50_predict_breed(img_path):
     # return dog breed that is predicted by the model
     return dog_names[np.argmax(predicted_vector)]
 
-print("Prediction using ResNet50: {}".format(ResNet50_predict_breed('C:/Users/jesus/Desktop/dogImages/full_train/001.Affenpinscher/n02110627_13710.jpg')))
+print("Prediction using ResNet50: {}".format(ResNet50_predict_breed('C:/Users/jesus/Desktop/DogFinder/dogImages/full_train/001.Affenpinscher/n02110627_13710.jpg')))
 
 def dog_breed_classifier(img_path):
     '''
@@ -350,4 +351,4 @@ def dog_breed_classifier(img_path):
         print("Unknown species")
 
 
-dog_breed_classifier('C:/Users/jesus/Desktop/dogImages/full_train/001.Affenpinscher/n02110627_13710.jpg')
+dog_breed_classifier('C:/Users/jesus/Desktop/DogFinder/dogImages/full_train/001.Affenpinscher/n02110627_13710.jpg')
