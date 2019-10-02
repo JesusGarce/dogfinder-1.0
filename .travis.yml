@@ -9,16 +9,16 @@ notifications:
     recipients:
       - tarraga.jesus@gmail.com
 
-addons:
-  sonarcloud:
-    organization: "jesusgarce" # the key of the org you chose at step #3
-    token:
-      secure: "QEWJqPSofexuhuP4qXIss4h4SeTirZQoWeHB1giuBWR8A54aYqIF6nKOk1mbJ6PsJeDfBonP0QXJ/a+Im+FS3MxxLxQtV1u3VXWWrzbA1y73zNR0MkwlgEO+xzpYMnkU6SJwdMc1mvmuQZbyTkLX33d2M5fdiY1DDS6xsrkrdxnSrXIe/mqsiDp87EnjHfAW08t99RcbuH+ENmnOwpyCr1YR5+UBkaXPJv4GFOh9wH+hqb0CCW7YO2AYABQYFbFPeB3SFGTtRhJ/u282JeW10N9rW3DXCLh0WCrF8JyOp9h56/pNUOJMvf7RvUL2GjRaegRf4KB29MWvFURF/mkIjWV8SdssGTOMUsjksQrpmkQcGVDhiXfwBxj4rYoOT1Xor+4cW/F91aQmG+CAhKtFCV3zPmUI8OB25el8YiAAIm+FJBHqxo7OZ5+z9Gyv1Da44xeRVq0JNqzA6Wedc3o6F+qICnjDh/M1MmrZqkrx31C2mhP1I98fiBBJbF+2Rp5Nifw9Tk++kDdgRcUKIG67wQO/iKl0aEZ+JRBXaZjfezfcYDhb/vFcZy5EN4Gfj5mn3wOhrCfW3PpOvpVHi5lanSVs5xvHMCgMNLXbooax2YxUjrBcfrFVCuJRWeDJy7UpzVlqzDviDpyY3lu0cywguNYn73+st8PFqrs4e35a5DM="
-script:
+#addons:
+#  sonarcloud:
+#    organization: "jesusgarce" # the key of the org you chose at step #3
+#    token:
+#      secure: "QEWJqPSofexuhuP4qXIss4h4SeTirZQoWeHB1giuBWR8A54aYqIF6nKOk1mbJ6PsJeDfBonP0QXJ/a+Im+FS3MxxLxQtV1u3VXWWrzbA1y73zNR0MkwlgEO+xzpYMnkU6SJwdMc1mvmuQZbyTkLX33d2M5fdiY1DDS6xsrkrdxnSrXIe/mqsiDp87EnjHfAW08t99RcbuH+ENmnOwpyCr1YR5+UBkaXPJv4GFOh9wH+hqb0CCW7YO2AYABQYFbFPeB3SFGTtRhJ/u282JeW10N9rW3DXCLh0WCrF8JyOp9h56/pNUOJMvf7RvUL2GjRaegRf4KB29MWvFURF/mkIjWV8SdssGTOMUsjksQrpmkQcGVDhiXfwBxj4rYoOT1Xor+4cW/F91aQmG+CAhKtFCV3zPmUI8OB25el8YiAAIm+FJBHqxo7OZ5+z9Gyv1Da44xeRVq0JNqzA6Wedc3o6F+qICnjDh/M1MmrZqkrx31C2mhP1I98fiBBJbF+2Rp5Nifw9Tk++kDdgRcUKIG67wQO/iKl0aEZ+JRBXaZjfezfcYDhb/vFcZy5EN4Gfj5mn3wOhrCfW3PpOvpVHi5lanSVs5xvHMCgMNLXbooax2YxUjrBcfrFVCuJRWeDJy7UpzVlqzDviDpyY3lu0cywguNYn73+st8PFqrs4e35a5DM="
+#script:
 #Test unitario y de integracion con cobertura (jacoco)
-- mvn org.jacoco:jacoco-maven-plugin:prepare-agent verify
+#- mvn org.jacoco:jacoco-maven-plugin:prepare-agent verify
 # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=JesusGarce_apaw-ep-jesus-garceran
+#- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=JesusGarce_apaw-ep-jesus-garceran
 
 #Deploy https://apaw-ep-xxx.herokuapp.com
 #deploy:
