@@ -1,5 +1,6 @@
 import psycopg2
 
+from datetime import datetime
 
 def select_breed(breed_id):
     connection = False
@@ -48,8 +49,9 @@ def put_registry(type, breed_name, breed_percentage, breed_2_name, breed_2_perce
                                       port="5432",
                                       database="dogfinder-db")
         cursor = connection.cursor()
-        postgres_insert_query = "INSERT INTO imagesRegistry (image_url, type, name_found_breed, percentage, name_found_breed_2, percentage_2, date_registry) VALUES (%s,%s,%s,%s,%s,%s,now())"
-        record_to_insert = (url, type, breed_name, breed_percentage, breed_2_name, breed_2_percentage)
+        dt = datetime.now()
+        postgres_insert_query = "INSERT INTO imagesRegistry (image_url, type, name_found_breed, percentage, name_found_breed_2, percentage_2, date_registry) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+        record_to_insert = (url, type, breed_name, breed_percentage, breed_2_name, breed_2_percentage, dt)
         cursor.execute(postgres_insert_query, record_to_insert)
         connection.commit()
         count = cursor.rowcount

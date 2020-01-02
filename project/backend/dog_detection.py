@@ -1,13 +1,9 @@
-from sklearn.datasets import load_files
-from keras.utils import np_utils
 import tensorflow as tf
 import numpy as np
 from glob import glob
 import cv2
 import re
-import matplotlib.pyplot as plt
-from keras.applications.resnet50 import decode_predictions
-from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D
+
 from project.backend.connection_db import select_breed, put_registry
 
 
@@ -24,7 +20,7 @@ def face_detector(img_path):
     faces = face_cascade.detectMultiScale(gray)
     return len(faces) > 0
 
-dog_names = [item[20:-1] for item in sorted(glob("C:/Users/jesus/Desktop/DogFinder/dogImages/train/*/"))]
+dog_names = [item[20:-1] for item in sorted(glob("C:/Users/jesus/Desktop/DogFinder/dogImages/full_train/*/"))]
 
 from keras.applications.resnet50 import ResNet50
 
@@ -57,8 +53,8 @@ def dog_detector(img_path):
     prediction = ResNet50_predict_labels(img_path)
     return ((prediction <= 268) & (prediction >= 151))
 
-ResNet50_model = tf.keras.models.load_model('project/backend/dogfinder_resnet50.h5')
-#ResNet50_model = tf.keras.models.load_model('C:/Users/jesus/Desktop/dogfinder-1.0/project/backend/dogfinder_resnet50.h5')
+#ResNet50_model = tf.keras.models.load_model('project/backend/dogfinder_resnet50.h5')
+ResNet50_model = tf.keras.models.load_model('C:/Users/jesus/Desktop/dogfinder-1.0/project/backend/dogfinder_resnet50.h5')
 
 def extract_Resnet50(tensor):
 	from keras.applications.resnet50 import ResNet50, preprocess_input
@@ -88,10 +84,12 @@ def ResNet50_predict_breed(img_path):
 
     print("Preparando el resultado...")
 
+    print(dog_names[predicted_ind_max_array[0]])
+
     output_array = []
     for i in range(5):
         percentage = round(predicted_vector_array[predicted_ind_max_array[i]]*100, 2)
-        name_breed = dog_names[predicted_ind_max_array[i]][34:]
+        name_breed = dog_names[predicted_ind_max_array[i]][33:]
         name = re.sub("[^A-Za-z]+", ' ', name_breed)
         original_name = dog_names[predicted_ind_max_array[i]]
         id = re.findall('\d+', original_name)
@@ -142,3 +140,4 @@ def dog_breed_classifier(img_path):
     else:
         put_registry(0, "", 0, "", 0, img_path)
         return 0
+

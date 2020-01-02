@@ -6,7 +6,7 @@ from werkzeug.utils import secure_filename
 
 sys.path.extend(['C:/Users/jesus/Desktop/dogfinder-1.0'])
 
-UPLOAD_FOLDER = 'C:/Users/jesus/Desktop/dogfinder-1.0/images_uploads'
+UPLOAD_FOLDER = 'images_uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
