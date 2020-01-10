@@ -4,7 +4,6 @@ import sys
 from flask import Flask, flash, request, redirect, render_template, json
 from werkzeug.utils import secure_filename
 
-sys.path.extend(['C:/Users/jesus/Desktop/dogfinder-1.0'])
 
 UPLOAD_FOLDER = 'images_uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -68,4 +67,4 @@ def get_breed_info(breed):
     return
 
 if __name__ == '__main__':
-    app.run(debug=False, threaded=False)
+    app.run(threaded=True, port=5000)
