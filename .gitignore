@@ -6,6 +6,7 @@ env
 venv
 
 node_modules/
+vendor/
 npm-debug.log
 bower_components/
 .module-cache
