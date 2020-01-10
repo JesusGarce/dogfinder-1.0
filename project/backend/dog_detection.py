@@ -8,7 +8,7 @@ from project.backend.connection_db import select_breed, put_registry
 
 
 # extract pre-trained face detector
-face_cascade = cv2.CascadeClassifier('C:/Users/jesus/Desktop/DogFinder/haarcascade_frontalface_alt.xml')
+face_cascade = cv2.CascadeClassifier('../haarcascade_frontalface_alt.xml')
 
 # returns "True" if face is detected in image stored at img_path
 def face_detector(img_path):
@@ -48,13 +48,13 @@ def ResNet50_predict_labels(img_path):
 ### returns "True" if a dog is detected in the image stored at img_path
 def dog_detector(img_path):
 
-    print("Detectando perros...")
+    print("Detectando perros..." + img_path)
 
     prediction = ResNet50_predict_labels(img_path)
     return ((prediction <= 268) & (prediction >= 151))
 
 #ResNet50_model = tf.keras.models.load_model('project/backend/dogfinder_resnet50.h5')
-ResNet50_model = tf.keras.models.load_model('C:/Users/jesus/Desktop/dogfinder-1.0/project/backend/dogfinder_resnet50.h5')
+ResNet50_model = tf.keras.models.load_model('backend/dogfinder_resnet50.h5')
 
 def extract_Resnet50(tensor):
 	from keras.applications.resnet50 import ResNet50, preprocess_input

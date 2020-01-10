@@ -3,7 +3,7 @@ import os
 from flask import Flask, flash, request, redirect, render_template, json
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'images_uploads'
+UPLOAD_FOLDER = '..\\images_uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
